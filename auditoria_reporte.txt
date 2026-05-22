@@ -1,0 +1,94 @@
+======================================================================
+AUDITORÍA INTEGRAL - arancel_venezuela_PRO.sql
+======================================================================
+
+[1] CARGANDO ARCHIVOS...
+  CSV filas con código     : 16685
+  CSV productos finales    : 10670 (código + AEC)
+  CSV partidas (XX.XX)     : 1279
+  SQL secciones            : 22
+  SQL capítulos            : 98
+  SQL partidas             : 1358
+  SQL subpartidas          : 16336
+  SQL notas legales        : 1063
+
+[2] CONTEO DE FILAS CSV (sin código vs con código)
+  Filas sin código (notas/encabezados): 10673
+  Filas con código                  : 16685
+
+[3] CÓDIGOS DEL CSV QUE NO ESTÁN EN SQL (subpartidas)
+  Productos largos (>=8 dígitos) faltantes: 4
+    30024270  AEC=4  →  
+    38112140  AEC=14  →  
+    84729020  AEC=14BIT  →  
+    95030040  AEC=20  →  
+
+[4] SUBPARTIDAS EN SQL SIN EQUIVALENTE EN CSV (código >=8)
+  Registros extra/intermedios solo en SQL: 0 (puede ser normal por herencia)
+
+[5] PALABRAS PEGADAS EN DESCRIPCIONES SQL
+  Subpartidas con palabras pegadas: 3564
+  Partidas con palabras pegadas  : 97
+  Ejemplos subpartidas:
+    [010633] novaehollandiae → ...LOS DEMÁS ANIMALES VIVOS. > - - Avestruces; emúes (Dromaius novaehollandiae):...
+    [0106331000] novaehollandiae → ...LOS DEMÁS ANIMALES VIVOS. > Avestruces; emúes (Dromaius novaehollandiae): > Aves...
+    [0106339000] novaehollandiae → ...LOS DEMÁS ANIMALES VIVOS. > Avestruces; emúes (Dromaius novaehollandiae): > Aves...
+    [0106390000] novaehollandiae → ...LOS DEMÁS ANIMALES VIVOS. > Avestruces; emúes (Dromaius novaehollandiae): > Las ...
+    [01064] novaehollandiae → ...LOS DEMÁS ANIMALES VIVOS. > Avestruces; emúes (Dromaius novaehollandiae): > - In...
+    [030193] Ctenopharyngodon → ...PECES VIVOS. > - - Carpas (Cyprinus spp., Carassius spp., Ctenopharyngodon idell...
+    [0301931000] Ctenopharyngodon → ...PECES VIVOS. > Carpas (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, ...
+    [0301939000] Ctenopharyngodon → ...PECES VIVOS. > Carpas (Cyprinus spp., Carassius spp., Ctenopharyngodon idellus, ...
+    [0301991200] gueldenstaedtii → ...PECES VIVOS. > Para reproducción: > Los demás: - Para reproducción: - Esturiones...
+    [0301999200] gueldenstaedtii → ...PECES VIVOS. > Los demás: > Los demás: - Los demás: - Esturiones (Acipencer baer...
+    [0302210000] hippoglossoides → ...PESCADO FRESCO O REFRIGERADO, EXCEPTO LOS FILETES Y DEMÁS CARNE DE PESCADO DE LA...
+    [03025] Bregmacerotidae → ...PESCADO FRESCO O REFRIGERADO, EXCEPTO LOS FILETES Y DEMÁS CARNE DE PESCADO DE LA...
+    ... y 3552 más
+
+[6] POSIBLES TEXTOS CORTADOS EN SQL (terminan en preposición)
+  Subpartidas sospechosas: 843
+    [0106120000] ...mamíferos del orden Cetacea); manatíes y
+    [0205000000] ...DE LAS ESPECIES CABALLAR, ASNAL O MULAR,
+    [0210920000] ...rsopas (mamíferos del orden Cetacea); de
+    [030191] ...ncorhynchus mykiss, Oncorhynchus clarki,
+    [030193] ...arassius spp., Ctenopharyngodon idellus,
+    [0302110000] ...ncorhynchus mykiss, Oncorhynchus clarki,
+    [0302130000] ...orhynchus nerka, Oncorhynchus gorbuscha,
+    [03022] ...idae, Bothidae, Cynoglossidae, Soleidae,
+    [03024] ...pea pallasii), anchoas (Engraulis spp.),
+    [03025] ...regmacerotidae, Euclichthyidae, Gadidae,
+    ... y 833 más
+
+[7] PRODUCTOS FINALES SIN AEC EN SQL
+  Códigos >=10 dígitos con AEC     : 8880
+  Códigos >=10 dígitos sin AEC     : 2973
+
+[8] COMPARACIÓN CON CSVs DE EXTRACCIÓN ORIGINAL
+  subpartidas.csv original : ~11846 filas
+  SQL subpartidas          : 16336 filas
+  Diferencia               : +4490 (SQL incluye niveles intermedios)
+  partidas.csv original    : ~1275 filas
+  SQL partidas             : 1358 filas
+
+[9] NORMALIZACIÓN DEL SCRIPT SQL
+  ✅ Tiene BEGIN/COMMIT
+  ✅ UTF8 client_encoding
+  ✅ DROP CASCADE antes CREATE
+  ✅ Vista Metabase incluida
+  ✅ FK secciones→capítulos→partidas→subpartidas
+  ✅ Sin ROLLBACK suelto al final
+  COMMIT; encontrados: 1
+
+======================================================================
+RESUMEN EJECUTIVO
+======================================================================
+⚠️  4 códigos largos del CSV no están en SQL
+🔴 3564 subpartidas con palabras pegadas (limpieza necesaria)
+🟡 843 descripciones posiblemente cortadas (muchas son herencia multi-línea)
+⚠️  2973 productos finales sin AEC en SQL
+
+[PLAN DE LIMPIEZA RECOMENDADO]
+  1. Corregir CSV: insertar espacios en palabras pegadas (origen PDF→MD)
+  2. Re-ejecutar constructor_final.py
+  3. Re-ejecutar agregar_vista.py
+  4. Volver a correr esta auditoría
+  5. Revisar manualmente los 2 códigos intermedios faltantes (200819, 290375)

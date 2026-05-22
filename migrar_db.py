@@ -19,7 +19,7 @@ def main():
     user = input(f"Usuario [{default_user}]: ").strip() or default_user
     db = input(f"Nombre de Base de Datos [{default_db}]: ").strip() or default_db
 
-    sql_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sql", "arancel_venezuela_PRO.sql")
+    sql_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sql", "arancel_venezuela_PRO_perfect.sql")
 
     if not os.path.exists(sql_path):
         print(f"\n[ERROR] No se encuentra el archivo SQL en: {sql_path}")
