@@ -85,43 +85,25 @@ El script **`migrar_db.py`** contiene los pasos exactos:
 
 # 🌐 Despliegue (Subir al Servidor / Producción)
 
-## Opción 1 – Docker (recomendado)
-1. **Construir la imagen**
+## Opción 1 – Docker (Recomendado)
+El proyecto incluye un `Dockerfile` y un `docker-compose.yml` listos para levantar PostgreSQL (cargando automáticamente la base de datos). Adicionalmente, incluye **n8n** como un servicio opcional para consultar o automatizar flujos.
+
+1. **Asegurar variables de entorno**
+   Opcionalmente, puedes editar las contraseñas en el archivo `docker-compose.yml` y `Dockerfile` antes de iniciar.
+
+2. **Levantar SOLO la base de datos (PostgreSQL)**
    ```bash
-   docker build -t arancel-venezuela:latest .
+   docker compose up -d --build
    ```
-2. **Ejecutar con Docker‑Compose** (crea un `docker-compose.yml` si no existe)
-   ```yaml
-   version: "3.8"
-   services:
-     db:
-       image: postgres:13-alpine
-       environment:
-         POSTGRES_USER: postgres
-         POSTGRES_PASSWORD: yourpassword
-         POSTGRES_DB: arancel_venezuela
-       volumes:
-         - pgdata:/var/lib/postgresql/data
-     app:
-       image: arancel-venezuela:latest
-       depends_on:
-         - db
-       environment:
-         DB_HOST: db
-         DB_PORT: 5432
-         DB_USER: postgres
-         DB_NAME: arancel_venezuela
-         DB_PASSWORD: yourpassword
-   volumes:
-     pgdata:
-   ```
+   Esto construirá una imagen personalizada que incluye el script de base de datos y lo ejecutará automáticamente en su primer arranque, dejándola disponible en el puerto `5432`.
+
+3. **(Opcional) Levantar PostgreSQL + n8n**
+   Si deseas utilizar la herramienta visual n8n junto con la base de datos:
    ```bash
-   docker-compose up -d
+   docker compose --profile n8n up -d --build
    ```
-3. **Aplicar migración dentro del contenedor** (si la imagen no incluye la base pre‑cargada)
-   ```bash
-   docker exec -it $(docker ps -q -f "name=app") python migrar_db.py
-   ```
+   - **n8n** estará disponible en `http://localhost:5678`.
+   - Para conectar n8n a la BD: crea una credencial "Postgres", usa host `postgres`, base `arancel_venezuela`, tu usuario/contraseña, y pon el SSL en "disable".
 ## Opción 2 – CI/CD con GitHub Actions
 Incluye un workflow `deploy.yml` bajo `.github/workflows/` que:
 1. Construye la imagen Docker.

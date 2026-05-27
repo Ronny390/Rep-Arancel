@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  postgres:
+    build: .
+    container_name: arancel_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgress # <--- Cambia esta contraseña
+      POSTGRES_DB: arancel_venezuela
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    profiles:
+      - n8n
+    ports:
+      - "5678:5678"
+    environment:
+      # Basic n8n config
+      N8N_BASIC_AUTH_ACTIVE: "true"
+      N8N_BASIC_AUTH_USER: admin
+      N8N_BASIC_AUTH_PASSWORD: admin_password # <--- Cambia esta contraseña
+      # PostgreSQL connection details for the credential node
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DATABASE: arancel_venezuela
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgress # <--- Mismo password que arriba
+    depends_on:
+      postgres:
+        condition: service_healthy
+    # Optional: mount a folder for workflow imports/exports
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  pg_data:
+  n8n_data:

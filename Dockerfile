@@ -1,25 +1,15 @@
-# Dockerfile for Arancel Venezuela migration
+FROM postgres:15-alpine
 
-# Use official Python image (slim for smaller size)
-FROM python:3.11-slim
+# Set environment variables (you can override them at runtime)
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=postgress   # <-- Cambia esta contraseña
+ENV POSTGRES_DB=arancel_venezuela
 
-# Install PostgreSQL client (psql) for DB connection
-RUN apt-get update && apt-get install -y \ 
-    postgresql-client && rm -rf /var/lib/apt/lists/*
+# Copiar el script SQL al contenedor
+COPY arancel_venezuela_PRO_perfect.sql /docker-entrypoint-initdb.d/01_init.sql
 
-# Set work directory
-WORKDIR /app
+# Exponer el puerto estándar de PostgreSQL
+EXPOSE 5432
 
-# Copy only needed files
-COPY requirements.txt ./
-COPY migrar_db.py ./
-COPY sql/ ./sql/
-COPY data/ ./data/
-COPY docs/ ./docs/
-COPY README.md ./
-
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Default command runs the migration script
-CMD ["python", "migrar_db.py"]
+# No other commands are needed – the official postgres image will run the
+# scripts in /docker-entrypoint-initdb.d/ on the first start of the container.
