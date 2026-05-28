@@ -29,7 +29,7 @@ echo "Resumen de conexión:"
 echo "Servidor: $DB_HOST:$DB_PORT"
 echo "Usuario:  $DB_USER"
 echo "Base BD:  $DB_NAME"
-echo "Archivo:  sql/arancel_venezuela_PRO.sql"
+echo "Archivo:  sql/arancel_venezuela_PRO_perfect.sql"
 echo "====================================================================="
 echo ""
 
@@ -51,7 +51,7 @@ fi
 
 echo ""
 echo "[2/2] Ejecutando script de importación SQL..."
-psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -f "sql/arancel_venezuela_PRO.sql"
+psql -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" -f "sql/arancel_venezuela_PRO_perfect.sql"
 
 echo ""
 echo "====================================================================="

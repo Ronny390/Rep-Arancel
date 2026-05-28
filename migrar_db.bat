@@ -34,7 +34,7 @@ echo Resumen de conexion:
 echo Servidor: %DB_HOST%:%DB_PORT%
 echo Usuario:  %DB_USER%
 echo Base BD:  %DB_NAME%
-echo Archivo:  sql\arancel_venezuela_PRO.sql
+echo Archivo:  sql\arancel_venezuela_PRO_perfect.sql
 echo =====================================================================
 echo.
 
@@ -67,7 +67,7 @@ if %ERRORLEVEL% neq 0 (
 
 echo.
 echo [2/2] Ejecutando script de importacion SQL (esto puede tomar unos momentos)...
-psql -h %DB_HOST% -p %DB_PORT% -U %DB_USER% -d "%DB_NAME%" -f "sql\arancel_venezuela_PRO.sql"
+psql -h %DB_HOST% -p %DB_PORT% -U %DB_USER% -d "%DB_NAME%" -f "sql\arancel_venezuela_PRO_perfect.sql"
 
 if %ERRORLEVEL% equ 0 (
     echo.
