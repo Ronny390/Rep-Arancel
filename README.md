@@ -12,7 +12,45 @@ Repositorio para cargar el arancel aduanero venezolano en **PostgreSQL**. Incluy
 
 La forma **más fácil** de ejecutar el proyecto es con **Docker**: no necesitas instalar PostgreSQL ni Python en tu máquina. El contenedor crea la base de datos y carga el arancel automáticamente en el primer arranque.
 
-**Requisitos:** [Docker](https://docs.docker.com/get-docker/) 20.10+ y [Docker Compose](https://docs.docker.com/compose/install/) 2.0+.
+**Requisitos:** Docker 20.10+ y Docker Compose 2.0+ (incluido en el paquete `docker-compose-plugin`).
+
+### Instalar Docker en Ubuntu / Debian (apt)
+
+Si aún no tienes Docker, ejecuta estos comandos **antes** de levantar el proyecto:
+
+```bash
+# Dependencias
+sudo apt update
+sudo apt install -y ca-certificates curl gnupg
+
+# Clave y repositorio oficial de Docker
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${VERSION_CODENAME:-$VERSION_ID}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# En Debian, sustituye "ubuntu" por "debian" en la URL del repositorio:
+# https://download.docker.com/linux/debian
+
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Ejecutar Docker sin sudo (opcional; cierra sesión después)
+sudo usermod -aG docker "$USER"
+newgrp docker
+
+# Comprobar instalación
+docker --version
+docker compose version
+```
+
+> **Debian:** usa `https://download.docker.com/linux/debian` en el `curl` de la clave GPG y en la línea del `sources.list`.  
+> **Instalación mínima (solo paquetes de Ubuntu/Debian, sin repo oficial):** `sudo apt install -y docker.io docker-compose-plugin` — puede traer versiones más antiguas.
+
+### Clonar y levantar el proyecto
 
 ```bash
 git clone https://github.com/Ronny390/Rep-Arancel.git
@@ -123,21 +161,42 @@ Detalle de columnas: carpeta [docs/](docs/).
 
 PostgreSQL 15 en contenedor. En el **primer arranque** ejecuta el script SQL y deja la base lista.
 
-### Paso 1: Clonar
+### Paso 1: Instalar Docker (Ubuntu / Debian con apt)
+
+Sigue los mismos comandos de la sección [Instalar Docker en Ubuntu / Debian (apt)](#instalar-docker-en-ubuntu--debian-apt) del inicio rápido.
+
+Resumen:
+
+```bash
+sudo apt update
+sudo apt install -y ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${VERSION_CODENAME:-$VERSION_ID}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo usermod -aG docker "$USER"
+docker compose version
+```
+
+### Paso 2: Clonar el repositorio
 
 ```bash
 git clone https://github.com/Ronny390/Rep-Arancel.git
 cd Rep-Arancel
 ```
 
-### Paso 2: (Opcional) Ajustar credenciales
+### Paso 3: (Opcional) Ajustar credenciales
 
 Edita la misma contraseña en ambos archivos:
 
 - `docker-compose.yml` → `POSTGRES_PASSWORD`
 - `Dockerfile` → `POSTGRES_PASSWORD`
 
-### Paso 3: Levantar el servicio
+### Paso 4: Levantar el servicio
 
 ```bash
 docker compose up -d --build
@@ -145,7 +204,7 @@ docker compose up -d --build
 
 La primera vez puede tardar varios minutos (descarga de imagen + carga del SQL).
 
-### Paso 4: Verificar
+### Paso 5: Verificar
 
 ```bash
 docker compose ps
@@ -298,7 +357,7 @@ Vía alternativa en [docs/README_oracle.md](docs/README_oracle.md) y carpeta `or
 
 | Problema | Solución |
 |----------|----------|
-| `docker: command not found` | Instala Docker; en Linux añade tu usuario al grupo `docker` |
+| `docker: command not found` | Instala Docker con apt (sección [Instalar Docker](#instalar-docker-en-ubuntu--debian-apt)); añade tu usuario al grupo `docker` |
 | Puerto `5432` en uso | Cambia el mapeo en `docker-compose.yml` (ej. `"5433:5432"`) |
 | Docker no carga datos / tablas vacías | Volumen ya inicializado: `docker compose down -v` y `up` de nuevo |
 | Carga muy lenta la primera vez | Normal (~29k líneas SQL); revisa logs: `docker compose logs -f postgres` |
