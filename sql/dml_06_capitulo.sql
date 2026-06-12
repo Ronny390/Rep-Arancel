@@ -1,5 +1,4 @@
 -- DML: CAPITULO (98 capitulos)
--- NOTA: fk_seccion = ID_seccion del MD
 
 INSERT ALL
   INTO CAPITULO (codigo_2digitos, descripcion, fk_seccion) VALUES ('01', 'ANIMALES VIVOS', 1)

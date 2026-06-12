@@ -1,5 +1,4 @@
 -- DML: PARTIDA (~1276 partidas)
--- NOTA: fk_capitulo = ID_capitulo del MD
 
 INSERT ALL
   INTO PARTIDA (codigo_4digitos, descripcion, fk_capitulo) VALUES ('01.01', 'CABALLOS, ASNOS, MULOS Y BURDÉGANOS, VIVOS.', 1)

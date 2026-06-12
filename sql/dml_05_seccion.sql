@@ -1,4 +1,4 @@
--- DML: SECCION (22 secciones del Arancel venezolano)
+-- DML: SECCION (22 secciones)
 
 INSERT ALL
   INTO SECCION (numero_romano, titulo) VALUES ('I', 'ANIMALES VIVOS Y PRODUCTOS DEL REINO ANIMAL')
