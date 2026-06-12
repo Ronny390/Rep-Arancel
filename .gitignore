@@ -1,0 +1,17 @@
+# Archivos y directorios generados por Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+venv/
+env/
+.env
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
+
+# Configuración del editor
+.vscode/
+.idea/

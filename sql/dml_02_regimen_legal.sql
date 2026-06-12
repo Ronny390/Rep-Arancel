@@ -1,0 +1,25 @@
+-- DML: REGIMEN_LEGAL
+INSERT ALL
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (1, 'Libre importacion')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (2, 'Permiso sanitario MPPS')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (3, 'Permiso INSAI')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (4, 'Autorizacion MINEA')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (5, 'Permiso SASA')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (6, 'Permiso MPPA Pesca')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (7, 'Certificado SENCAMER')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (8, 'Permiso MPPS sustancias peligrosas')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (9, 'Autorizacion MPPEE Energia')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (10, 'Permiso MPPAT fauna silvestre')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (11, 'Autorizacion MPPCTI Ciencia')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (12, 'Autorizacion MPPRE Exteriores')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (13, 'Permiso Ministerio Defensa')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (14, 'Autorizacion MPPEE Hidrocarburos')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (15, 'Permiso SASA Vegetal')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (16, 'Certificado calidad SENCAMER')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (17, 'Permiso MPPC cuotas importacion')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (18, 'Certificado sanitario pesqueros')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (19, 'Autorizacion MPPPF Finanzas')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (20, 'Permiso MPPT Turismo')
+  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (21, 'Otros permisos especiales')
+SELECT 1 FROM DUAL;
+COMMIT;

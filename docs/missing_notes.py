@@ -1,0 +1,35 @@
+import csv
+import PyPDF2
+from pathlib import Path
+import sys
+
+csv_path = Path(r"C:/Users/usuario/Desktop/New diseño/docs/Notas_Legales.csv")
+pdf_path = Path(r"C:/Users/usuario/Desktop/New diseño/docs/Arancel_24-04-25.pdf")
+
+# Load notes from CSV
+notes = []
+with csv_path.open(encoding='utf-8-sig') as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        notes.append({
+            "tipo": row["Tipo"].strip(),
+            "seccion": row["Seccion"].strip(),
+            "capitulo": row["Capitulo"].strip(),
+            "texto": row["Texto"].strip()
+        })
+
+# Extract PDF text
+with pdf_path.open('rb') as f:
+    reader = PyPDF2.PdfReader(f)
+    pdf_text = "\n".join(page.extract_text() or "" for page in reader.pages)
+
+missing = []
+for note in notes:
+    txt = note["texto"].replace('"', '').strip()
+    if txt and txt not in pdf_text:
+        missing.append(note)
+
+print(f"Total notes: {len(notes)}")
+print(f"Missing notes: {len(missing)}")
+for m in missing:
+    print(f"Tipo: {m['tipo']}, Seccion: {m['seccion']}, Capitulo: {m['capitulo']}, Texto: {m['texto']}")
