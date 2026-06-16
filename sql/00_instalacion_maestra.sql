@@ -15,6 +15,7 @@ PROMPT =========================================================
 PROMPT 1. CREANDO ESTRUCTURA DE LA BASE DE DATOS (TABLAS Y VISTAS)
 PROMPT =========================================================
 @@arancel_venezuela_oracle_ddl.sql
+@@02_vistas_metabase.sql
 PROMPT =========================================================
 PROMPT 2. CARGANDO CATÁLOGOS BASE (UNIDADES Y REGÍMENES)
 PROMPT =========================================================
