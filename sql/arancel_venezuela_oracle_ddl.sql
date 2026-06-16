@@ -1,3 +1,4 @@
+SET SQLBLANKLINES ON;
 -- ===========================================================================
 -- SISTEMA: Arancel de Aduanas de Venezuela - SENIAT
 -- PROYECTO: Sistema Ronny - Ronny Infante (2013200064)
@@ -7,7 +8,6 @@
 --              modelo relacional del Arancel (Decreto N° 4.944)
 -- METODOLOGIA: Kendall & Kendall + Ciclo Dimensional de Ralph Kimball
 -- ===========================================================================
-
 -- ---------------------------------------------------------------------------
 -- ADVERTENCIA: Ejecutar en orden. Las tablas padre deben existir antes
 -- de crear las tablas hijas con llaves foráneas.
@@ -22,8 +22,6 @@
 --   8. SUBPARTIDA_REGIMEN
 --   9. NOTA_LEGAL
 -- ---------------------------------------------------------------------------
-
-
 -- ===========================================================================
 -- TABLA 1: UNIDAD_FISICA
 -- Catálogo de unidades de medida utilizadas en la clasificación arancelaria.
@@ -36,15 +34,11 @@ CREATE TABLE UNIDAD_FISICA (
     nombre      VARCHAR2(100)   NOT NULL,
     created_at  DATE            DEFAULT SYSDATE NOT NULL,
     updated_at  DATE            DEFAULT SYSDATE NOT NULL,
-
     CONSTRAINT uq_unidad_sigla UNIQUE (sigla)
 );
-
 COMMENT ON TABLE  UNIDAD_FISICA             IS 'Catálogo de unidades de medida físicas del Arancel (kg, u, l, m, etc.)';
 COMMENT ON COLUMN UNIDAD_FISICA.sigla       IS 'Abreviatura oficial. Ej: kg, u, m, l';
 COMMENT ON COLUMN UNIDAD_FISICA.nombre      IS 'Nombre completo de la unidad. Ej: Kilogramo, Unidad, Metro';
-
-
 -- ===========================================================================
 -- TABLA 2: SECCION
 -- Nivel más alto de la jerarquía arancelaria.
@@ -57,15 +51,11 @@ CREATE TABLE SECCION (
     titulo          VARCHAR2(1000)  NOT NULL,
     created_at      DATE            DEFAULT SYSDATE NOT NULL,
     updated_at      DATE            DEFAULT SYSDATE NOT NULL,
-
     CONSTRAINT uq_seccion_romano UNIQUE (numero_romano)
 );
-
 COMMENT ON TABLE  SECCION                   IS 'Nivel I de la jerarquía: Secciones del Arancel (I al XXII)';
 COMMENT ON COLUMN SECCION.numero_romano     IS 'Identificador romano oficial. Ej: I, II, XV, XXI';
 COMMENT ON COLUMN SECCION.titulo            IS 'Título descriptivo de la Sección';
-
-
 -- ===========================================================================
 -- TABLA 3: CAPITULO
 -- Segundo nivel de la jerarquía (98 capítulos).
@@ -79,20 +69,15 @@ CREATE TABLE CAPITULO (
     fk_seccion          NUMBER          NOT NULL,
     created_at          DATE            DEFAULT SYSDATE NOT NULL,
     updated_at          DATE            DEFAULT SYSDATE NOT NULL,
-
     CONSTRAINT uq_capitulo_codigo   UNIQUE (codigo_2digitos),
     CONSTRAINT fk_capitulo_seccion  FOREIGN KEY (fk_seccion)
         REFERENCES SECCION (id_seccion) ON DELETE CASCADE
 );
-
 COMMENT ON TABLE  CAPITULO                      IS 'Nivel II de la jerarquía: Capítulos (01 al 98)';
 COMMENT ON COLUMN CAPITULO.codigo_2digitos      IS 'Código de 2 dígitos del Capítulo. Ej: 01, 27, 84';
 COMMENT ON COLUMN CAPITULO.descripcion          IS 'Título descriptivo del Capítulo';
 COMMENT ON COLUMN CAPITULO.fk_seccion           IS 'FK → SECCION. Sección a la que pertenece el Capítulo';
-
 CREATE INDEX idx_capitulo_seccion ON CAPITULO (fk_seccion);
-
-
 -- ===========================================================================
 -- TABLA 4: PARTIDA
 -- Tercer nivel de la jerarquía (identificadas con 4 dígitos).
@@ -106,20 +91,15 @@ CREATE TABLE PARTIDA (
     fk_capitulo         NUMBER          NOT NULL,
     created_at          DATE            DEFAULT SYSDATE NOT NULL,
     updated_at          DATE            DEFAULT SYSDATE NOT NULL,
-
     CONSTRAINT uq_partida_codigo    UNIQUE (codigo_4digitos),
     CONSTRAINT fk_partida_capitulo  FOREIGN KEY (fk_capitulo)
         REFERENCES CAPITULO (id_capitulo) ON DELETE CASCADE
 );
-
 COMMENT ON TABLE  PARTIDA                       IS 'Nivel III de la jerarquía: Partidas de 4 dígitos. Ej: 03.06, 87.03';
 COMMENT ON COLUMN PARTIDA.codigo_4digitos       IS 'Código con punto separador. Ej: 03.06, 84.07';
 COMMENT ON COLUMN PARTIDA.descripcion           IS 'Descripción de la partida';
 COMMENT ON COLUMN PARTIDA.fk_capitulo           IS 'FK → CAPITULO';
-
 CREATE INDEX idx_partida_capitulo ON PARTIDA (fk_capitulo);
-
-
 -- ===========================================================================
 -- TABLA 5: SUBPARTIDA
 -- Nivel de mayor desagregación. En Venezuela se llega hasta 10 dígitos
@@ -141,7 +121,6 @@ CREATE TABLE SUBPARTIDA (
     fk_subpartida_padre     NUMBER,
     created_at              DATE            DEFAULT SYSDATE NOT NULL,
     updated_at              DATE            DEFAULT SYSDATE NOT NULL,
-
     CONSTRAINT uq_subpartida_codigo     UNIQUE (codigo_10digitos),
     CONSTRAINT chk_subpartida_terminal  CHECK (es_terminal IN (0, 1)),
     CONSTRAINT fk_subpartida_partida    FOREIGN KEY (fk_partida)
@@ -151,7 +130,6 @@ CREATE TABLE SUBPARTIDA (
     CONSTRAINT fk_subpartida_padre      FOREIGN KEY (fk_subpartida_padre)
         REFERENCES SUBPARTIDA (id_subpartida)
 );
-
 COMMENT ON TABLE  SUBPARTIDA                            IS 'Nivel IV (terminal) de la jerarquía. Desagregación hasta 10 dígitos para Venezuela';
 COMMENT ON COLUMN SUBPARTIDA.codigo_10digitos           IS 'Código completo nacional. Ej: 0306.11.10.00, 8703.21.00.10';
 COMMENT ON COLUMN SUBPARTIDA.descripcion                IS 'Descripción completa de la subpartida (puede ser larga, tipo CLOB)';
@@ -159,13 +137,10 @@ COMMENT ON COLUMN SUBPARTIDA.es_terminal                IS '1=Línea declarable 
 COMMENT ON COLUMN SUBPARTIDA.fk_partida                 IS 'FK → PARTIDA';
 COMMENT ON COLUMN SUBPARTIDA.fk_unidad                  IS 'FK → UNIDAD_FISICA (nullable: puede no tener unidad asignada)';
 COMMENT ON COLUMN SUBPARTIDA.fk_subpartida_padre        IS 'Relación reflexiva. Apunta al padre inmediato en el árbol. NULL = nodo raíz de subpartida. Ej: padre de 0306.16.10.90 es 0306.16.10';
-
 CREATE INDEX idx_subpartida_partida  ON SUBPARTIDA (fk_partida);
 CREATE INDEX idx_subpartida_unidad   ON SUBPARTIDA (fk_unidad);
 CREATE INDEX idx_subpartida_terminal ON SUBPARTIDA (es_terminal);
 CREATE INDEX idx_subpartida_padre    ON SUBPARTIDA (fk_subpartida_padre);
-
-
 -- ===========================================================================
 -- TABLA 6: TARIFA_AD_VALOREM
 -- Almacena los gravámenes arancelarios asociados a las subpartidas TERMINALES.
@@ -176,29 +151,24 @@ CREATE INDEX idx_subpartida_padre    ON SUBPARTIDA (fk_subpartida_padre);
 -- ===========================================================================
 CREATE TABLE TARIFA_AD_VALOREM (
     id_tarifa           NUMBER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
-    porcentaje_aec      NUMBER(5,2)     NOT NULL,
-    porcentaje_exaec    NUMBER(5,2),
+    codigo_aec          VARCHAR2(10)    NOT NULL,
+    codigo_exaec        VARCHAR2(10),
+    valor_numerico_aec  NUMBER(5,2),
     fecha_vigencia      DATE,
     fk_subpartida       NUMBER          NOT NULL,
     created_at          DATE            DEFAULT SYSDATE NOT NULL,
     updated_at          DATE            DEFAULT SYSDATE NOT NULL,
-
     CONSTRAINT uq_tarifa_subpartida     UNIQUE (fk_subpartida, fecha_vigencia),
-    CONSTRAINT chk_tarifa_aec           CHECK (porcentaje_aec >= 0 AND porcentaje_aec <= 100),
-    CONSTRAINT chk_tarifa_exaec         CHECK (porcentaje_exaec IS NULL OR (porcentaje_exaec >= 0 AND porcentaje_exaec <= 100)),
     CONSTRAINT fk_tarifa_subpartida     FOREIGN KEY (fk_subpartida)
         REFERENCES SUBPARTIDA (id_subpartida) ON DELETE CASCADE
 );
-
-COMMENT ON TABLE  TARIFA_AD_VALOREM                 IS 'Tarifas arancelarias por subpartida. Separada para historial de Gaceta Oficial';
-COMMENT ON COLUMN TARIFA_AD_VALOREM.porcentaje_aec  IS 'Arancel Externo Común (porcentaje). Ej: 5, 10, 15, 20';
-COMMENT ON COLUMN TARIFA_AD_VALOREM.porcentaje_exaec IS 'Excepción al AEC (porcentaje venezolano nacional). Nullable';
+COMMENT ON TABLE  TARIFA_AD_VALOREM                 IS 'Tarifas arancelarias por subpartida. Soporta codigos alfanumericos (ej. 14BK)';
+COMMENT ON COLUMN TARIFA_AD_VALOREM.codigo_aec      IS 'Arancel Externo Comun (texto alfanumerico). Ej: 14, 14BK, OBIT';
+COMMENT ON COLUMN TARIFA_AD_VALOREM.codigo_exaec    IS 'Excepcion al AEC (texto alfanumerico). Ej: 0A';
+COMMENT ON COLUMN TARIFA_AD_VALOREM.valor_numerico_aec IS 'Valor numerico puro del AEC extraido del codigo para reportes en Metabase';
 COMMENT ON COLUMN TARIFA_AD_VALOREM.fecha_vigencia  IS 'Fecha de entrada en vigor (para trazabilidad de Gaceta). Nullable inicialmente';
 COMMENT ON COLUMN TARIFA_AD_VALOREM.fk_subpartida   IS 'FK → SUBPARTIDA (solo terminales, es_terminal=1)';
-
 CREATE INDEX idx_tarifa_subpartida ON TARIFA_AD_VALOREM (fk_subpartida);
-
-
 -- ===========================================================================
 -- TABLA 7: REGIMEN_LEGAL
 -- Catálogo de los 21 regímenes legales (permisos, restricciones, ministerios)
@@ -211,16 +181,12 @@ CREATE TABLE REGIMEN_LEGAL (
     descripcion         VARCHAR2(500)   NOT NULL,
     created_at          DATE            DEFAULT SYSDATE NOT NULL,
     updated_at          DATE            DEFAULT SYSDATE NOT NULL,
-
     CONSTRAINT uq_regimen_codigo    UNIQUE (codigo_regimen),
     CONSTRAINT chk_regimen_codigo   CHECK (codigo_regimen BETWEEN 1 AND 21)
 );
-
 COMMENT ON TABLE  REGIMEN_LEGAL                     IS 'Catálogo de los 21 regímenes legales aduaneros del Arancel venezolano';
 COMMENT ON COLUMN REGIMEN_LEGAL.codigo_regimen      IS 'Número oficial del régimen (1 al 21)';
 COMMENT ON COLUMN REGIMEN_LEGAL.descripcion         IS 'Descripción del permiso o ministerio competente';
-
-
 -- ===========================================================================
 -- TABLA 8: SUBPARTIDA_REGIMEN (Tabla Intermedia / Relación N:M)
 -- Resuelve la relación Muchos-a-Muchos entre SUBPARTIDA y REGIMEN_LEGAL.
@@ -230,22 +196,17 @@ CREATE TABLE SUBPARTIDA_REGIMEN (
     fk_subpartida   NUMBER  NOT NULL,
     fk_regimen      NUMBER  NOT NULL,
     created_at      DATE    DEFAULT SYSDATE NOT NULL,
-
     CONSTRAINT pk_subpartida_regimen    PRIMARY KEY (fk_subpartida, fk_regimen),
     CONSTRAINT fk_sr_subpartida         FOREIGN KEY (fk_subpartida)
         REFERENCES SUBPARTIDA (id_subpartida) ON DELETE CASCADE,
     CONSTRAINT fk_sr_regimen            FOREIGN KEY (fk_regimen)
         REFERENCES REGIMEN_LEGAL (id_regimen) ON DELETE CASCADE
 );
-
 COMMENT ON TABLE  SUBPARTIDA_REGIMEN                IS 'Tabla intermedia N:M entre SUBPARTIDA y REGIMEN_LEGAL';
 COMMENT ON COLUMN SUBPARTIDA_REGIMEN.fk_subpartida  IS 'FK → SUBPARTIDA';
 COMMENT ON COLUMN SUBPARTIDA_REGIMEN.fk_regimen     IS 'FK → REGIMEN_LEGAL';
-
 CREATE INDEX idx_sr_subpartida ON SUBPARTIDA_REGIMEN (fk_subpartida);
 CREATE INDEX idx_sr_regimen    ON SUBPARTIDA_REGIMEN (fk_regimen);
-
-
 -- ===========================================================================
 -- TABLA 9: NOTA_LEGAL
 -- Entidad unificada multinivel para las notas legales del Arancel.
@@ -268,7 +229,6 @@ CREATE TABLE NOTA_LEGAL (
     fk_subpartida   NUMBER,
     created_at      DATE            DEFAULT SYSDATE NOT NULL,
     updated_at      DATE            DEFAULT SYSDATE NOT NULL,
-
     -- La nota debe estar vinculada a exactamente UN nivel jerárquico
     CONSTRAINT chk_nota_un_nivel CHECK (
         (CASE WHEN fk_seccion    IS NOT NULL THEN 1 ELSE 0 END +
@@ -290,7 +250,6 @@ CREATE TABLE NOTA_LEGAL (
     CONSTRAINT fk_nota_subpartida   FOREIGN KEY (fk_subpartida)
         REFERENCES SUBPARTIDA (id_subpartida) ON DELETE CASCADE
 );
-
 COMMENT ON TABLE  NOTA_LEGAL                    IS 'Notas legales multinivel del Arancel. Cada nota pertenece a exactamente un nivel jerárquico';
 COMMENT ON COLUMN NOTA_LEGAL.tipo_nota          IS 'Seccion | Capitulo | Partida | Subpartida | Complementaria';
 COMMENT ON COLUMN NOTA_LEGAL.contenido          IS 'Texto completo de la nota legal (CLOB para notas extensas)';
@@ -298,14 +257,11 @@ COMMENT ON COLUMN NOTA_LEGAL.fk_seccion         IS 'FK → SECCION (nullable). A
 COMMENT ON COLUMN NOTA_LEGAL.fk_capitulo        IS 'FK → CAPITULO (nullable). Activo solo si tipo_nota = Capitulo';
 COMMENT ON COLUMN NOTA_LEGAL.fk_partida         IS 'FK → PARTIDA (nullable). Activo solo si tipo_nota = Partida';
 COMMENT ON COLUMN NOTA_LEGAL.fk_subpartida      IS 'FK → SUBPARTIDA (nullable). Activo solo si tipo_nota = Subpartida o Complementaria';
-
 CREATE INDEX idx_nota_seccion    ON NOTA_LEGAL (fk_seccion);
 CREATE INDEX idx_nota_capitulo   ON NOTA_LEGAL (fk_capitulo);
 CREATE INDEX idx_nota_partida    ON NOTA_LEGAL (fk_partida);
 CREATE INDEX idx_nota_subpartida ON NOTA_LEGAL (fk_subpartida);
 CREATE INDEX idx_nota_tipo       ON NOTA_LEGAL (tipo_nota);
-
-
 -- ===========================================================================
 -- VISTA 1: V_SUBPARTIDA_DESCRIPCION_COMPLETA
 -- Propósito: Resolver el problema de las descripciones ambiguas ("Los demás")
@@ -343,11 +299,8 @@ CONNECT BY
     PRIOR s.id_subpartida = s.fk_subpartida_padre  -- Relación padre → hijo
 ORDER SIBLINGS BY
     s.codigo_10digitos;
-
 COMMENT ON TABLE V_SUBPARTIDA_DESC_COMPLETA IS
     'Vista jerárquica de subpartidas. Resuelve descripciones ambiguas tipo "Los demás" mediante SYS_CONNECT_BY_PATH. Usar en Metabase en lugar de la tabla base.';
-
-
 -- ===========================================================================
 -- FIN DEL SCRIPT DDL
 -- Tablas creadas: 9  |  Vistas creadas: 1

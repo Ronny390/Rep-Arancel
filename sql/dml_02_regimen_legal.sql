@@ -1,25 +1,23 @@
 -- DML: REGIMEN_LEGAL
-INSERT ALL
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (1, 'Importacion o Exportacion Prohibida.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (2, 'Importacion o Exportacion Reservada al Ejecutivo Nacional.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (3, 'Permiso del Ministerio del Poder Popular con competencia en materia de salud.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (4, 'Permiso del Ministerio del Poder Popular con competencia en materia de industrias y produccion nacional.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (5, 'Certificado Sanitario del Pais de Origen.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (6, 'Permiso Sanitario del Ministerio del Poder Popular con competencia en materia de agricultura productiva y tierras.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (7, 'Permiso del Ministerio del Poder Popular con competencia en materia de defensa.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (8, 'Licencia de Importacion administrada por el Ministerio del Poder Popular con competencia en materia de alimentacion.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (9, 'Licencia de Importacion administrada por el Ministerio del Poder Popular con competencia en materia de comercio exterior.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (10, 'Permiso del Ministerio del Poder Popular con competencia en materia de ecosocialismo.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (11, 'Permiso del Ministerio del Poder Popular con competencia en materia de petroleo.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (12, 'Registro Sanitario expedido por el Ministerio del Poder Popular con competencia en materia de salud.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (13, 'Registro Sanitario expedido por el Ministerio del Poder Popular con competencia en materia de agricultura productiva y tierras.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (14, 'Permiso del Ministerio del Poder Popular con competencia en materia de alimentacion.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (15, 'Permiso del Ministerio del Poder Popular con competencia en materia de ciencia, tecnologia e innovacion.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (16, 'Licencia de Importacion administrada por el Ministerio del Poder Popular con competencia en materia de industrias y produccion nacional.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (17, 'Permiso del Ministerio del Poder Popular con competencia en materia de energia electrica.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (18, 'Permiso del Ministerio del Poder Popular con competencia en materia de pesca y acuicultura.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (19, 'Certificado del Proceso Kimberley.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (20, 'Constancia de Registro de Norma Venezolana COVENIN o Registro de Reglamento Tecnico administrado por el Servicio Desconcentrado de Normalizacion, Calidad, Metrologia y Reglamentos Tecnicos (SENCAMER), dependiente jerarquicamente del Ministerio del Poder popular con competencia en comercio nacional.')
-  INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (21, 'Permiso del Registro Nacional Unico de Operadores de Sustancias Quimicas Controladas.')
-SELECT 1 FROM DUAL;
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (1, 'Importacion o Exportacion Prohibida.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (2, 'Importacion o Exportacion Reservada al Ejecutivo Nacional.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (3, 'Permiso del Ministerio del Poder Popular con competencia en materia de salud.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (4, 'Permiso del Ministerio del Poder Popular con competencia en materia de industrias y produccion nacional.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (5, 'Certificado Sanitario del Pais de Origen.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (6, 'Permiso Sanitario del Ministerio del Poder Popular con competencia en materia de agricultura productiva y tierras.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (7, 'Permiso del Ministerio del Poder Popular con competencia en materia de defensa.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (8, 'Licencia de Importacion administrada por el Ministerio del Poder Popular con competencia en materia de alimentacion.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (9, 'Licencia de Importacion administrada por el Ministerio del Poder Popular con competencia en materia de comercio exterior.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (10, 'Permiso del Ministerio del Poder Popular con competencia en materia de ecosocialismo.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (11, 'Permiso del Ministerio del Poder Popular con competencia en materia de petroleo.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (12, 'Registro Sanitario expedido por el Ministerio del Poder Popular con competencia en materia de salud.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (13, 'Registro Sanitario expedido por el Ministerio del Poder Popular con competencia en materia de agricultura productiva y tierras.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (14, 'Permiso del Ministerio del Poder Popular con competencia en materia de alimentacion.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (15, 'Permiso del Ministerio del Poder Popular con competencia en materia de ciencia, tecnologia e innovacion.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (16, 'Licencia de Importacion administrada por el Ministerio del Poder Popular con competencia en materia de industrias y produccion nacional.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (17, 'Permiso del Ministerio del Poder Popular con competencia en materia de energia electrica.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (18, 'Permiso del Ministerio del Poder Popular con competencia en materia de pesca y acuicultura.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (19, 'Certificado del Proceso Kimberley.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (20, 'Constancia de Registro de Norma Venezolana COVENIN o Registro de Reglamento Tecnico administrado por el Servicio Desconcentrado de Normalizacion, Calidad, Metrologia y Reglamentos Tecnicos (SENCAMER), dependiente jerarquicamente del Ministerio del Poder popular con competencia en comercio nacional.');
+INSERT INTO REGIMEN_LEGAL (codigo_regimen, descripcion) VALUES (21, 'Permiso del Registro Nacional Unico de Operadores de Sustancias Quimicas Controladas.');
 COMMIT;
