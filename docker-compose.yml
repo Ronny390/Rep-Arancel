@@ -5,14 +5,14 @@ services:
     image: gvenzl/oracle-free:latest
     container_name: oracle-arancel
     environment:
-      - ORACLE_PWD=postgres
+      - ORACLE_PASSWORD=postgres
     ports:
       - "1521:1521"
     volumes:
       # Volúmen para que los datos persistan si se apaga el contenedor
       - oracle-data:/opt/oracle/oradata
       # Inyectar script de auto-arranque en la carpeta mágica de Oracle
-      - ./sql/init_db.sh:/opt/oracle/scripts/startup/01_init_db.sh
+      - ./sql/init_db.sh:/container-entrypoint-initdb.d/01_init_db.sh
       # Inyectar toda nuestra carpeta sql para que el script pueda leerla
       - ./sql:/opt/oracle/sql_scripts
     healthcheck:
