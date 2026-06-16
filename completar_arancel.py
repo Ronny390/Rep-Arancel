@@ -133,6 +133,15 @@ def main():
                 
         # Limpieza final de descripcion
         desc = f"{dashes} {desc}".strip()
+        
+        # Cortar basura de páginas siguientes (encabezados corrompidos por PDF shadow text)
+        for garbage in ['GACETA', 'REPBLICA', 'SSEE', 'Extraordinario', 'Cdigo']:
+            idx = desc.find(garbage)
+            if idx != -1:
+                desc = desc[:idx].strip()
+                
+        # Límite duro muy seguro para evitar segfaults en sqlplus
+        desc = desc[:1000]
         desc = desc.replace("'", "''")
         
         es_terminal = 1 if aec is not None else 0
