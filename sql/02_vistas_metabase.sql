@@ -3,32 +3,35 @@
 -- 1. Buscador Maestro: Une todas las jerarquías (Sección -> Capítulo -> Partida -> Subpartida)
 CREATE OR REPLACE VIEW VW_BUSCADOR_MAESTRO AS
 SELECT 
-    s.codigo_subpartida AS "Código Subpartida",
-    s.descripcion AS "Descripción del Producto",
-    p.codigo_partida AS "Código Partida",
+    s.codigo_10digitos AS "Código Subpartida",
+    TO_CHAR(s.descripcion) AS "Descripción del Producto",
+    p.codigo_4digitos AS "Código Partida",
     p.descripcion AS "Descripción Partida",
-    c.codigo_capitulo AS "Capítulo",
-    sec.numero_seccion AS "Sección"
+    c.codigo_2digitos AS "Capítulo",
+    sec.numero_romano AS "Sección"
 FROM 
     SUBPARTIDA s
 JOIN 
-    PARTIDA p ON s.codigo_partida = p.codigo_partida
+    PARTIDA p ON s.fk_partida = p.id_partida
 JOIN 
-    CAPITULO c ON p.codigo_capitulo = c.codigo_capitulo
+    CAPITULO c ON p.fk_capitulo = c.id_capitulo
 JOIN 
-    SECCION sec ON c.id_seccion = sec.id_seccion;
+    SECCION sec ON c.fk_seccion = sec.id_seccion;
 
--- 2. Detalles y Tarifas: Enfocado puramente en los impuestos y regímenes
+-- 2. Detalles y Tarifas: Cruza subpartidas con sus tarifas
 CREATE OR REPLACE VIEW VW_DETALLE_TARIFAS AS
 SELECT 
-    codigo_subpartida AS "Código Subpartida",
-    descripcion AS "Descripción del Producto",
-    tarifa_ad_valorem AS "Tarifa Ad-Valorem (%)",
-    regimen_legal_impo AS "Régimen Importación",
-    regimen_legal_expo AS "Régimen Exportación",
-    unidad_fisica AS "Unidad Física",
-    observaciones AS "Observaciones"
+    s.codigo_10digitos AS "Código Subpartida",
+    TO_CHAR(s.descripcion) AS "Descripción del Producto",
+    t.codigo_aec AS "Tarifa AEC",
+    t.valor_numerico_aec AS "Porcentaje Arancel (%)",
+    u.sigla AS "Unidad Física"
 FROM 
-    SUBPARTIDA;
+    SUBPARTIDA s
+LEFT JOIN 
+    TARIFA_AD_VALOREM t ON s.id_subpartida = t.fk_subpartida
+LEFT JOIN 
+    UNIDAD_FISICA u ON s.fk_unidad = u.id_unidad
+WHERE s.es_terminal = 1;
 
 COMMIT;
