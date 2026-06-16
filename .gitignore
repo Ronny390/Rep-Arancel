@@ -15,3 +15,7 @@ Thumbs.db
 # Configuración del editor
 .vscode/
 .idea/
+
+# Archivos temporales de Metabase (H2)
+metabase-data/*.trace.db
+metabase-data/*.lock.db
