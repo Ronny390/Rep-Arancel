@@ -11,8 +11,8 @@ CREATE OR REPLACE VIEW VW_BUSCADOR_MAESTRO AS
 SELECT 
     s.codigo_10digitos AS "Código Subpartida",
     TO_CHAR(s.descripcion_completa) AS "Descripción del Producto",
-    -- Columna oculta para filtros inteligentes (sin acentos y mayúsculas)
-    TRANSLATE(UPPER(TO_CHAR(s.descripcion_completa)), 'ÁÉÍÓÚÀÈÌÒÙÄËÏÖÜÂÊÎÔÛ', 'AEIOUAEIOUAEIOUAEIOU') AS "Búsqueda Normalizada",
+    -- Columna oculta omnibox: Contiene Código + Descripción sin acentos para buscar por cualquiera de los dos
+    TRANSLATE(UPPER(TO_CHAR(s.codigo_10digitos) || ' ' || TO_CHAR(s.descripcion_completa)), 'ÁÉÍÓÚÀÈÌÒÙÄËÏÖÜÂÊÎÔÛ', 'AEIOUAEIOUAEIOUAEIOU') AS "Búsqueda Normalizada",
     p.codigo_4digitos AS "Código Partida",
     p.descripcion AS "Descripción Partida",
     c.codigo_2digitos AS "Capítulo",
