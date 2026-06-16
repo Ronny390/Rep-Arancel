@@ -2,11 +2,15 @@
 
 -- Vistas para facilitar la creación de Dashboards en Metabase
 
+-- Vistas para facilitar la creación de Dashboards en Metabase
+
 -- 1. SUPER BUSCADOR MAESTRO: Une TODO en una sola tabla (Jerarquía + Tarifas + Regímenes)
 CREATE OR REPLACE VIEW VW_BUSCADOR_MAESTRO AS
 SELECT 
     s.codigo_10digitos AS "Código Subpartida",
     TO_CHAR(s.descripcion) AS "Descripción del Producto",
+    -- Columna oculta para filtros inteligentes (sin acentos)
+    TRANSLATE(UPPER(TO_CHAR(s.descripcion)), 'ÁÉÍÓÚÀÈÌÒÙÄËÏÖÜÂÊÎÔÛ', 'AEIOUAEIOUAEIOUAEIOU') AS "Búsqueda Normalizada",
     p.codigo_4digitos AS "Código Partida",
     p.descripcion AS "Descripción Partida",
     c.codigo_2digitos AS "Capítulo",
@@ -32,8 +36,5 @@ LEFT JOIN
     TARIFA_AD_VALOREM t ON s.id_subpartida = t.fk_subpartida
 LEFT JOIN 
     UNIDAD_FISICA u ON s.fk_unidad = u.id_unidad;
-
--- Ya no hace falta la segunda vista, la eliminamos si existe para evitar confusiones
-DROP VIEW VW_DETALLE_TARIFAS;
 
 COMMIT;
