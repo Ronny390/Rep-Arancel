@@ -27,14 +27,11 @@ PROMPT =========================================================
 @@dml_05_seccion.sql
 @@dml_06_capitulo.sql
 @@dml_07_partida.sql
-@@dml_08_subpartida.sql
-@@dml_10_subpartida_faltantes.sql
+@@dml_08_subpartida_final.sql
 PROMPT =========================================================
 PROMPT 4. CARGANDO DATOS COMPLEMENTARIOS (TARIFAS Y REGÍMENES POR SUBPARTIDA)
 PROMPT =========================================================
-@@dml_03_tarifa_ad_valorem.sql
-@@dml_11_tarifa_faltantes.sql
-@@dml_04_subpartida_regimen.sql
+@@dml_04_subpartida_regimen_final.sql
 PROMPT =========================================================
 PROMPT 5. CARGANDO NOTAS LEGALES
 PROMPT =========================================================

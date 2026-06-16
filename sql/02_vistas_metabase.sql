@@ -11,6 +11,7 @@ CREATE OR REPLACE VIEW VW_BUSCADOR_MAESTRO AS
 SELECT 
     s.codigo_10digitos AS "Código Subpartida",
     TO_CHAR(s.descripcion_completa) AS "Descripción del Producto",
+    s.es_terminal AS "Es Terminal",
     -- Columna oculta omnibox: Contiene Código + Descripción sin acentos para buscar por cualquiera de los dos
     TRANSLATE(UPPER(TO_CHAR(s.codigo_10digitos) || ' ' || TO_CHAR(s.descripcion_completa)), 'ÁÉÍÓÚÀÈÌÒÙÄËÏÖÜÂÊÎÔÛ', 'AEIOUAEIOUAEIOUAEIOU') AS "Búsqueda Normalizada",
     p.codigo_4digitos AS "Código Partida",
