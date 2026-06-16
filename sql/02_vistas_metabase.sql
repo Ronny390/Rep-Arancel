@@ -37,7 +37,6 @@ JOIN
 LEFT JOIN 
     TARIFA_AD_VALOREM t ON s.id_subpartida = t.fk_subpartida
 LEFT JOIN 
-    UNIDAD_FISICA u ON s.fk_unidad = u.id_unidad
-WHERE s.es_terminal = 1;
+    UNIDAD_FISICA u ON s.fk_unidad = u.id_unidad;
 
 COMMIT;
