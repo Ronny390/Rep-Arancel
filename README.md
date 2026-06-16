@@ -49,9 +49,17 @@ Si tu equipo o universidad prefiere no usar Docker y ya cuentan con un servidor 
 - **Contraseña:** `postgres`
 - **SID/Service Name:** `FREEPDB1`
 
-**Metabase**
+**Metabase (Dashboards)**
 - **URL:** `http://localhost:3000`
-- Configuración inicial: Conéctate a la base de datos Oracle ingresando las credenciales mencionadas arriba. Se recomienda crear la conexión apuntando a la vista `V_SUBPARTIDA_DESC_COMPLETA` para la mejor experiencia de visualización.
+- **Configuración Inicial (Conexión a Oracle):**
+  Al entrar a Metabase por primera vez y crear tu cuenta, elige agregar una base de datos "Oracle" e ingresa exactamente estos datos:
+  - **Host:** `oracle-db` *(importante: usar este nombre en lugar de localhost)*
+  - **Port:** `1521`
+  - **Database Name / Service:** `FREEPDB1`
+  - **User:** `SYSTEM`
+  - **Password:** `postgres`
+
+*Nota Técnica: Por restricciones legales de Oracle, el driver oficial `ojdbc11.jar` no viene preinstalado en Metabase, pero este repositorio ya lo incluye y lo inyecta automáticamente a través del archivo `docker-compose.yml`.*
 
 ---
 *Desarrollado para la evaluación universitaria.*
