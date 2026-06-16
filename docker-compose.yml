@@ -31,6 +31,8 @@ services:
     volumes:
       # Volúmen para que los dashboards creados en Metabase no se borren
       - metabase-data:/metabase-data
+      # Inyectar el driver JDBC de Oracle por temas de licencia
+      - ./plugins:/plugins
     depends_on:
       oracle-db:
         condition: service_healthy
