@@ -8,7 +8,7 @@ cd /opt/oracle/sql_scripts
 
 # 1. Crear usuario dedicado 'arancel' para que Metabase no oculte las tablas
 echo "Creando usuario ARANCEL en la base de datos..."
-sqlplus system/postgres@FREEPDB1 <<EOF
+sqlplus system/your_password@FREEPDB1 <<EOF
 CREATE USER arancel IDENTIFIED BY arancel;
 GRANT CONNECT, RESOURCE, DBA TO arancel;
 EXIT;
