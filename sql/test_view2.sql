@@ -1,0 +1,7 @@
+SET LINESIZE 200;
+SET PAGESIZE 100;
+COLUMN SUBPARTIDA FORMAT A20;
+COLUMN DESCRIPCION_COMPLETA FORMAT A80;
+SELECT subpartida, nivel, es_terminal, substr(descripcion_completa, 1, 70) as desc_corta
+FROM VW_BUSCADOR_MAESTRO 
+WHERE subpartida LIKE '8536.4%';

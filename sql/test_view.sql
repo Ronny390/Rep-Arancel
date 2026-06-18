@@ -1,0 +1,7 @@
+SET LINESIZE 200;
+SET PAGESIZE 100;
+COLUMN CODIGO_10DIGITOS FORMAT A20;
+COLUMN DESCRIPCION FORMAT A60;
+SELECT codigo_10digitos, nivel, es_terminal, substr(descripcion_completa, 1, 50) as desc_corta
+FROM VW_BUSCADOR_MAESTRO 
+WHERE codigo_10digitos LIKE '8536.4%';

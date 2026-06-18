@@ -32,6 +32,32 @@ Un número grande que muestre la cantidad exacta de productos transables.
   [[ AND "Búsqueda Normalizada" LIKE '%' || UPPER({{buscar}}) || '%' ]]
   ```
 
+## 1.5 Resumen Estructural: Totales Arancelarios (Dashboard Ejecutivo)
+Muestra un desglose del total de Secciones, Capítulos, Partidas y Subpartidas en la base de datos.
+* **Datos**: Consultas a las tablas raíz.
+* **Métrica**: Cuenta de filas
+* **Filtros**: Ninguno
+* **Visualización**: Se recomienda crear 4 "Tarjetas de Número" separadas (una por cada línea), o guardarlo como un Gráfico de Barras/Tabla usando la consulta en formato lista.
+* **SQL Directo (Formato Fila)**:
+  ```sql
+  SELECT 
+      (SELECT COUNT(*) FROM SECCION) AS "Total Secciones",
+      (SELECT COUNT(*) FROM CAPITULO) AS "Total Capítulos",
+      (SELECT COUNT(*) FROM PARTIDA) AS "Total Partidas",
+      (SELECT COUNT(*) FROM SUBPARTIDA) AS "Total Subpartidas"
+  FROM DUAL;
+  ```
+* **SQL Directo (Formato Lista/Barras)**:
+  ```sql
+  SELECT 'Secciones' AS "Nivel Arancelario", COUNT(*) AS "Cantidad" FROM SECCION
+  UNION ALL
+  SELECT 'Capítulos' AS "Nivel Arancelario", COUNT(*) AS "Cantidad" FROM CAPITULO
+  UNION ALL
+  SELECT 'Partidas' AS "Nivel Arancelario", COUNT(*) AS "Cantidad" FROM PARTIDA
+  UNION ALL
+  SELECT 'Subpartidas' AS "Nivel Arancelario", COUNT(*) AS "Cantidad" FROM SUBPARTIDA;
+  ```
+
 ## 2. Promedio de Arancel AEC (Gauge / Medidor)
 Muestra la tasa promedio de impuestos de importación ad-valorem.
 * **Datos**: Tabla `VW_BUSCADOR_MAESTRO`

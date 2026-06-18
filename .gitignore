@@ -17,5 +17,5 @@ Thumbs.db
 .idea/
 
 # Archivos temporales de Metabase (H2)
-metabase-data/*.trace.db
-metabase-data/*.lock.db
+metabase-data/
+plugins/

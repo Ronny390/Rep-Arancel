@@ -31,7 +31,11 @@ PROMPT =========================================================
 PROMPT =========================================================
 PROMPT 4. CARGANDO DATOS COMPLEMENTARIOS (TARIFAS Y REGÍMENES POR SUBPARTIDA)
 PROMPT =========================================================
+@@dml_03_tarifa_ad_valorem.sql
+@@dml_11_tarifa_faltantes.sql
+@@dml_12_tarifas_corregidas.sql
 @@dml_04_subpartida_regimen_final.sql
+@@dml_13_regimenes_corregidos.sql
 PROMPT =========================================================
 PROMPT 5. CARGANDO NOTAS LEGALES
 PROMPT =========================================================
