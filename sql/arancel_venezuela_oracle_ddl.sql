@@ -114,6 +114,7 @@ CREATE TABLE SUBPARTIDA (
     descripcion             CLOB            NOT NULL,
     es_terminal             NUMBER(1)       DEFAULT 0 NOT NULL,
     fk_partida              NUMBER          NOT NULL,
+    activa                  NUMBER(1)       DEFAULT 1 NOT NULL,
     fk_unidad               NUMBER,
     -- RELACION REFLEXIVA: apunta al registro padre dentro de la misma tabla.
     -- Permite reconstruir el árbol jerárquico y resolver «Los demás».

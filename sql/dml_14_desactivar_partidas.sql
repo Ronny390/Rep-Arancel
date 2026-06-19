@@ -1,0 +1,24 @@
+-- DML 14: Desactivacion logica de partidas exentas
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '0101210010';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '1104220010';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '2710124900';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '2710124910';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '3004909943';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '3214101010';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '3214102010';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '3824997991';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '3920109910';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '4011100014';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '4016920010';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '6910900011';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '7606129090';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '9808000020';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '9808000030';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '9808000040';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '9808000050';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '9808000060';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '9808000070';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '9808000080';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '9808000090';
+UPDATE SUBPARTIDA SET activa = 0 WHERE REPLACE(codigo_10digitos, '.', '') = '9820000021';
+COMMIT;
